@@ -1,0 +1,83 @@
+The href attribute of <a> specifies the URL of the page the link goes to
+
+The src attribute of <img> specifies the path to the image to be displayed
+
+The text inside a <pre> element is displayed in a fixed-width font and it preserves both spaces and line breaks:
+
+The <img> tag has two required attributes:
+src - Specifies the path to the image
+alt - Specifies an alternate text for the image
+
+The HTML <head> element is a container for the following elements: <title>, <style>, <meta>, <link>, <script>, and <base>.
+
+<link rel="stylesheet" href="mystyle.css">
+
+Define the character set used:
+<meta charset="UTF-8">
+
+Refresh document every 30 seconds:
+<meta http-equiv="refresh" content="30"
+
+Setting the viewport to make your website look good on all devices:
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+@media screen and (max-width: 800px) {800px tak ye chalega}
+
+<head>	Defines information about the document
+<title>	Defines the title of a document
+<base>	Defines a default address or a default target for all links on a page
+<link>	Defines the relationship between a document and an external resource
+<meta>	Defines metadata about an HTML document
+<script>	Defines a client-side script
+<style>	Defines style information for a document
+The <kbd> element defines keyboard input
+The <samp> element defines sample output from a computer program
+The <code> element defines a piece of computer code
+The <var> element defines a variable in programming or in a mathematical expression
+The <pre> element defines preformatted text
+
+&nbsp; -> non breaking space... jaha likhoge vaha space aayga hi aayga
+HTML entities for differnt sign above,below on letters
+
+The HTML5 specification encourages web developers to use the UTF-8 character set, which covers almost 
+all of the characters and symbols in the world!
+
+The for attribute of the <label> tag should be equal to the id attribute of the <input> element to bind them together.
+<input type="radio" id="html" name="fav_language" value="HTML">
+<label for="html">HTML</label>
+<input type="text" id="fname" name="fname">
+
+Notice that each input field must have a name attribute to be submitted.
+If the name attribute is omitted, the value of the input field will not be sent at all.
+
+----------------------------------------------------------
+emmet shortcut ->>   <!-- div>ul>li*5.li${} -->
+<div>
+        <ul>
+            <li class="li1"></li>
+            <li class="li2"></li>
+            <li class="li3"></li>
+            <li class="li4"></li>
+            <li class="li5"></li>
+        </ul>
+    </div>
+----------------------------------------------------------
+.s3 .s4{} -> s4 class is inside s3 class
+.s3.s4{} -> s3 and s4 are class name given to a some div then only these prop. will appply
+.s2 , .s4{} -> s2 and s3 will both have these prop.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

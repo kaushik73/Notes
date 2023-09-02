@@ -1,0 +1,656 @@
+CTRL + K, CTRL + C ==> Multi Line Comment.
+
+MySQL is software, but SQL is a database language.
+
+-------------------SQL SERVER ARCHI.--------------------------------SS-91
+SQL Server protocol layer supports 3 types of Client-Server Archi. 
+->Shared Memory = client and server are on same m/c.
+->TCP/IP = client and server are separate remote machine(physically remote)
+-> Named Pipe = client and server are separate remote machine(same location)
+
+
+these all 3 protocol uses TDS (Tabular data stream) packets which is encapsulated in network packets. and this enabled to tranfer data from client to server.
+
+
+CDM Parser = check sql server syntax(SYNTAX rules), vo column uss table m hai aur vo table uss DB m hai (SEMANTIC rules)
+
+Query Optimezer creates execution plan for users query.
+will select cheapest not the best cost effective execution plan
+DML queries are marked for optimization but
+DDL are not optimized.
+Optimizer goal is to minimize query run time.
+
+
+Query Executor -> provides execution plan to fetch the data from storage engine for execution. Once data is recieved published it to protocol layer and then to user
+
+Now query executor communicate to Access methods(a layer to communicate to Storahe Engine) if it is a SELECT query then it goes to buffer manager or if it is a non-select query then it goes to transaction manager
+
+ldf = log data file
+
+Transcational Manager maintains ACID properties.
+---------------------------------------------------------------
+Data stored in SQL server as a page(8 kb size)
+
+page(8 KB) * 8 ==> it creats extents  ==> these extent are stored in files and these files are mapped with file groups.
+
+when client req. to sql server -> request goes to engine then fetch page  from the disk -> fetch page from buffer cache.
+
+---------------------------DIRTY PAGES--------------------------------------
+agar disk m se kuch page fetch kiya aur vo buffer cache m gaya aur vo pages get changed then these pages are dirty pages.
+
+In SQL Server, a "dirty page" refers to a data page that has been modified in memory but not yet written back to disk. In database systems, data is stored in pages, which are fixed-size blocks of data typically ranging from 4 KB to 32 KB. When data is modified or inserted into a database, the corresponding pages in memory are marked as "dirty" to indicate that their content differs from the corresponding pages on disk.
+
+Dirty pages are eventually written back to disk through a process known as "checkpointing" or "flushing." Checkpointing involves writing all modified pages from the buffer cache to their respective database files on disk. SQL Server employs an automatic process to periodically perform checkpointing, or it can be triggered manually.
+
+Writing dirty pages to disk is an I/O-intensive operation, so SQL Server optimizes the flushing process to minimize disk writes and improve performance. It uses various algorithms and mechanisms, such as a least recently used (LRU) algorithm and a cost-based algorithm, to determine which dirty pages should be flushed to disk first.
+
+In summary, dirty pages in SQL Server represent data pages that have been modified in memory but not yet persisted to disk. They are part of the buffer cache and are eventually written back to disk during checkpointing to ensure data durability and consistency.
+
+---------------------------------------------SQL SERVER AUTHENTICATION-----------------------------------------
+In SQL Server, there are two authentication modes:
+
+Windows Authentication Mode (formerly known as Windows Integrated Security): This mode allows users to connect to SQL Server using their Windows credentials. When a user logs in to their Windows account, their login information is used to authenticate their connection to SQL Server. This authentication mode leverages the security mechanisms of the Windows operating system, such as Active Directory, and is often preferred in enterprise environments where centralized user management is in place.
+
+Mixed Mode Authentication (also known as SQL Server and Windows Authentication Mode): This mode allows users to connect to SQL Server using either Windows authentication or SQL Server authentication. With SQL Server authentication, users are required to provide a username and password specific to SQL Server when establishing a connection. This mode is useful in scenarios where Windows credentials may not be available or when accessing SQL Server remotely. It also allows the creation of SQL Server logins independent of Windows accounts.
+
+
+---------SQL COMMANDAS--------------------------------------------------
+Types of SQL commands:
+
+1. DDL (data definition language): defining relation schema.
+1.1. CREATE: create table, DB, view.
+1.2. ALTER TABLE: modification in table structure. e.g, change column datatype or add/remove columns.
+1.3. DROP: delete table, DB, view.
+1.4. TRUNCATE: remove all the tuples from the table , save schema.
+1.5. RENAME: rename DB name, table name, column name etc.
+
+2. DRL/DQL (data retrieval language / data query language): retrieve data from the tables.
+2.1. SELECT
+
+3. DML (data modification language): use to perform modifications in the DB
+3.1. INSERT: insert data into a relation
+3.2. UPDATE: update relation data.
+3.3. DELETE: delete row(s) from the relation. (can be reverted back)
+
+4. DCL (Data Control language): grant or revoke authorities from user.
+4.1. GRANT: access privileges to the DB
+4.2. REVOKE: revoke user access privileges.
+
+5. TCL (Transaction control language): to manage transactions done in the DB
+5.1. START TRANSACTION: begin a transaction
+5.2. COMMIT: apply all the changes and end transaction
+5.3. ROLLBACK: discard changes and end transaction
+5.4. SAVEPOINT: checkout within the group of transactions in which to rollback.
+
+--------------------------------------------------------------------------------------
+The DROP command is used to remove the whole database or table indexes, data, and more. 
+The TRUNCATE command is used to remove all the rows from the table and it only delete the complete data from the table.
+The DELETE command is used to delete particular records from a table. 
+
+
+-------------------------varchar vs Text------------------------------------------------
+TEXT has a fixed max size of 2¹⁶-1 = 65535 characters.
+VARCHAR has a variable max size M up to M = 2¹⁶-1.
+So you cannot choose the size of TEXT but you can for a VARCHAR.
+--------------------------------------------------------------------------------------
+
+char is fixed-length and padded with spaces, stores alphanumeric and special characters , If the data being stored is shorter than the specified length, trailing spaces are added to pad the remaining space.
+
+varchar is variable-length and does not add trailing spaces, stores alphanumeric and special characters. Up to 8,000 characters . Actual Length (in bytes)
+Takes up 1 byte per character
+
+nvarchar is also variable-length but specifically designed to store Unicode character data. Up to 4,000 characters. 	Takes up 2 bytes per Unicode/Non-Unicode character . 2 times Actual Length (in bytes)
+
+VARCHAR, each character takes 1 byte but in the case of NVARCHAR, each character takes 2 bytes of storage, which means NVARACHAR is twice as expensive as VARCHAR type. 
+
+DECIMAL(precision, scale). Precision is the number of digits in a number. Scale is the number of digits to the right of the decimal point in a number
+
+
+The MAX() aggregate function returns the highest value (maximum) in a set of non-NULL values.
+
+-----------------------------------------CHECKSUM------------------------------------------
+CHECKSUM_AGG() function is an aggregate function that returns the checksum of the values in a set.
+
+SELECT  CHECKSUM_AGG(quantity) qty_checksum_agg FROM sales.inventory;
+
+As you can see clearly from the output, the result of the CHECKSUM_AGG() changed. It means that the data in the quantity column has been changed since the last checksum calculation.
+
+---------------------Naming Convention----------------------------------------
+Use CamelCase or underscores to separate words in the name.
+For views, use a prefix like "vw_" to distinguish them from tables.
+For stored procedures, use a prefix like "sp_" to indicate their purpose.
+
+Column : 
+For primary key columns, consider using a standard naming convention like "id" or "tablename_id".
+Use CamelCase or underscores to separate words in the name.
+
+Foreign Key : 
+Consider using a prefix like "fk_" or "ref_" to indicate foreign key relationships.
+
+Database Objects:
+Use all lowercase or uppercase letters consistently for keywords, function names, and SQL statements.
+
+Use singular for table names (user, role), and not plural (users, roles). 
+---------------------HAVING VS WHERE----------------------------------------
+
+SR.NO.	WHERE Clause	HAVING Clause
+
+1.	WHERE Clause is used to filter the records from the table based on the specified condition.	
+	HAVING Clause is used to filter record from the groups based on the specified condition.
+
+2.	WHERE Clause can be used without GROUP BY Clause	
+	HAVING Clause cannot be used without GROUP BY Clause
+
+3.	WHERE Clause implements in row operations	
+	HAVING Clause implements in column operation
+
+5.	WHERE Clause can be used with SELECT, UPDATE, DELETE statement.	
+	HAVING Clause can only be used with SELECT statement.
+
+6.	WHERE Clause is used before GROUP BY Clause	
+	HAVING Clause is used after GROUP BY Clause   => Where -> Group By -> Having -> ORDER BY.    (WGHO)
+
+7.	WHERE Clause is used with single row function like UPPER, LOWER etc.
+	HAVING Clause is used with multiple row function like SUM, COUNT etc.
+
+
+
+IsNull function: IsNull is commonly used in SQL to check if a value is null. It takes two arguments and returns the first argument if it is not null; otherwise, it returns the second argument.
+
+The SQL Coalesce function evaluates the arguments in order and always returns first non-null value from the defined argument list.
+
+We can use the SQL DATEADD function to add a particular period to our date. Suppose we have a requirement to add 1 month to current date. We can use the SQL DATEADD function to do this task.
+SELECT DATEADD(month, 2, GETDATE()) AS NewDate;
+
+we might need to format a date in different formats as per our requirements. We can use the SQL CONVERT() function in SQL Server to format DateTime in various formats.
+
+declare @Existingdate datetime
+Set @Existingdate=GETDATE()
+Select CONVERT(varchar,@Existingdate,101) as [Date]
+
+
+--------Database and server level-------------------
+the database level focuses on the operations and configurations within a specific database, while the server level encompasses tasks that apply to the entire database server or instance, including multiple databases hosted on that server.
+
+---------------------SCOPE_IDENTITY()--------------------------------------------------
+
+CREATE TABLE YourTable
+(
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(50)
+)
+
+INSERT INTO YourTable (Name)
+VALUES ('John Doe')
+
+SELECT SCOPE_IDENTITY() AS LastIdentityValue
+The SCOPE_IDENTITY() function will return the last identity value generated within the current scope, which in this case is the identity value generated for the recently inserted row.
+
+-------------------------------------------------------------------
+CAST is an ANSI standard while CONVERT is a specific function in the SQL server
+CONVERT allows more flexibility and is the preferred function to use for data, time values, traditional numbers, and money signifiers. 
+CAST('732.98' AS INT)            SELECT CONVERT(INT, '10');
+
+---------------------------CASE------------------------------
+SELECT column1, column2,... , 
+CASE 
+  WHEN condition THEN result
+  ELSE result
+END AS Alias
+FROM table;
+
+SELECT *
+CASE
+    WHEN country = 'USA' THEN 'United States'
+    WHEN country = 'UK' THEN 'United Kingdom'
+    ELSE 'Unknown Country'
+END AS country_name
+FROM Customers
+
+================================TEMP TABLES=====================================================
+In SQL Server, temporary tables are tables that are created and used for storing data temporarily within a specific session or scope. Temporary tables are useful when you need to store intermediate results during complex queries or when you want to break down a large task into smaller, more manageable parts.
+
+There are two types of temporary tables in SQL Server:
+
+Local Temporary Tables:
+
+Local temporary tables are prefixed with a single pound sign (#).
+They are visible only within the current session or connection.
+Local temporary tables are automatically dropped when the session that created them is closed.
+Local temporary tables can be accessed and manipulated by the same user within different batches or procedures within the session.
+
+
+Global Temporary Tables:
+
+Global temporary tables are prefixed with a double pound sign (##).
+They are visible to all sessions or connections.
+Global temporary tables are dropped automatically when the last session referencing them is closed.
+Global temporary tables are useful when you need to share data across multiple sessions or connections.
+
+
+
+---------------------------------TABLE VARIABLES--------------------------------
+Table Variables not visible outside the scope in which they are defined.
+Temporary tables, on the other hand, have broader scope options, such as session or global scope, depending on their type.
+Table variables exist for the duration of the batch, stored procedure, or function execution.
+Once the execution completes or the scope is exited, the table variable is automatically dropped and its memory is released.
+if we close the file the TABLE VARIABLES table gets deleted.
+Table variables don't participate in transactions and SELECTs are implicitly with NOLOCK.
+
+
+DECLARE @TempVariable TABLE (
+    ID INT,
+    Name VARCHAR(50),
+    Age INT
+);
+
+INSERT INTO @TempTable (ID, Name, Age) VALUES (1, 'John', 25);
+
+SELECT * FROM @TempTable;
+
+
+
+Table Variable  -> symbol @ , save in memory , temporary, roleback , stored in memory
+
+-----------------Temp Table VS Temp Variables----------------------------
+Memory usage: Table variables are stored in memory, whereas temporary tables are typically stored on disk. This difference in storage location affects performance. For smaller datasets, table variables can be more efficient because they don't involve disk I/O operations.
+
+Transaction handling: Table variables are automatically rolled back if a transaction is rolled back. They are tied to the transaction scope and provide more granular control over data changes. Temporary tables, on the other hand, are not directly tied to transactions and may require additional handling for rollback scenarios.
+
+
+Temp table: A Temp table is easy to create and back up data.
+Table variable: But the table variable involves the effort when we usually create the normal tables.
+
+Temp table: Temp table result can be used by multiple users.
+Table variable: But the table variable can be used by the current user only. 
+
+Temp table: Temp table will be stored in the tempdb. It will make network traffic. When we have large data in the temp table then it has to work across the database. A Performance issue will exist.
+---> Table variable: But a table variable will store in the physical memory for some of the data, then later when the size increases it will be moved to the tempdb.
+
+Temp table: Temp table can do all the DDL operations. It allows creating the indexes, dropping, altering, etc..,
+Table variable: Whereas table variable won't allow doing the DDL operations. But the table variable allows us to create the clustered index only.
+
+Temp table: Temp table can be used for the current session or global. So that a multiple user session can utilize the results in the table.
+Table variable: But the table variable can be used up to that program. (Stored procedure)
+
+Temp table: Temp variable cannot use the transactions. When we do the DML operations with the temp table then it can be rollback or commit the transactions.
+Table variable: But we cannot do it for table variable.
+
+Temp table: Functions cannot use the temp variable. More over we cannot do the DML operation in the functions .
+Table variable: But the function allows us to use the table variable. But using the table variable we can do that.
+
+Temp table: The stored procedure will do the recompilation (can't use same execution plan) when we use the temp variable for every sub sequent calls.
+Table variable: Whereas the table variable won't do like that.
+
+
+
+
+
+DECLARE @TableVariable TABLE (
+    ID INT,
+    Name VARCHAR(50)
+);
+--> A table variable can be passed as a parameter to functions and stored procedures while the same cannot be done with Temporary tables.
+
+-----------------------------------------------------------------NESTED AND CORELATED QUERY-------------------------------------------------------
+
+When a query is included inside another query, the Outer query is known as Main Query, and Inner query is known as Subquery.
+Nested Query – 
+In Nested Query,  Inner query runs first, and only once. Outer query is executed with result from Inner query.Hence, Inner query is used in execution of Outer query
+Inner query runs first, and only once. Outer query is executed with result from Inner query.
+
+
+Correlated Query – In Correlated Query,  Outer query executes first and for every Outer query row Inner query is executed. Hence, Inner query uses values from Outer query.
+Outer query executes first and for every Outer query row Inner query is executed.
+
+
+---------------ALTER--------------------------------
+ALTER TABLE table_name
+ADD column_name datatype;
+
+---------------KEY CONSTRAINTS--------------------------------
+
+Constraints are used to limit the type of data that can go into a table. This ensures the accuracy and reliability of the data in the table. If there is any violation between the constraint and the data action, the action is aborted.
+
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+
+
+Check Constraint & default Constraint->
+ CREATE TABLE temp (
+    EmployeeID INT PRIMARY KEY,
+    Status VARCHAR(50) DEFAULT 'Pending'
+    Salary DECIMAL(10,2),
+    CONSTRAINT CHK_Salary CHECK (Salary >= 1000));
+
+
+-----------------CREATE INDEX-------------------------------------
+In SQL, the INDEX constraint in a column makes it faster to retrieve data when querying that column.
+An index is a database object used to speed up data retrieval.
+It improves the performance of SELECT queries by providing a fast access path to the data. Indexes are created on columns that are 
+frequently used in search, filtering, and sorting operations.
+
+CREATE TABLE Colleges (
+  college_id INT PRIMARY KEY,
+  college_code VARCHAR(20) NOT NULL,
+);
+
+-- create index
+CREATE INDEX college_index
+ON Colleges(college_code);
+
+-- create unique index
+CREATE UNIQUE INDEX college_index
+ON Colleges(college_code);
+
+To Remove the index - ALTER TABLE Colleges DROP INDEX college_index;
+
+SELECT * INTO WorkerClone FROM Worker WHERE 1 = 0; -- only copy schema
+SELECT * INTO WorkerClone1 FROM Worker; -- copy whole data
+
+ the intersection of two sets is a collection of values that are common to both sets. In other words, the intersection of two sets is a set of elements that exist in both sets.   -> (SELECT * FROM Worker) INTERSECT (SELECT * FROM WorkerClone1);
+
+
+(SELECT * FROM Worker)
+INTERSECT
+(SELECT * FROM WorkerClone1);
+
+
+
+-------------NTH SALARY-------------------------------------------
+(select min(salary) from Worker where salary in(select distinct top 3 salary from Worker order by Salary DESC));
+-----------------NTH maximum salary-----------------------------------------------
+SELECT distinct Salary from worker a WHERE n >= (SELECT count(distinct Salary) from worker b WHERE a.Salary <= b.Salary) order by a.Salary desc;
+
+-- show twice a rows -> use union 
+select * from worker W where W.DEPARTMENT='HR' 
+union all
+select * from Worker W1 where W1.DEPARTMENT='HR';
+
+
+------------------------------------------------KEYS----------------------------------------------
+Super Key - A super key is a set of one or more than one key that can be used to identify a record uniquely in a table. Example: Primary key, Unique key, Alternate key are a subset of Super Keys.
+
+Candidate Key - There can be multiple Candidate Keys in one table. Each Candidate Key can work as a Primary Key.
+Candidate key any attribute can contain NULL value.
+Every table has to have at least one Candidate key, but there can be more than one candidate key can be there in a table.
+Its confirmed that a primary key is a candidate key.But Its not confirmed that a candidate key can be a primary key.
+
+Primary Key - A primary key is a set of one or more fields/columns of a table that uniquely identify a record in a database table. It can not accept null, duplicate values. Only one Candidate Key can be Primary Key.
+
+Alternate key - An Alternate key is a key that can work as a primary key. Basically, it is a candidate key that currently is not a primary key.
+
+Unique Key - A unique key is a set of one or more fields/columns of a table that uniquely identify a record in a database table. It is like a Primary key but it can accept only one null value and it can not have duplicate values.
+
+Foreign Key - Foreign Key is a field in a database table that is the Primary key in another table. It can accept multiple nulls and duplicate values. 
+
+
+
+-----------------CUSTOM ERROR--------------------------------
+RAISERROR function with a custom error message, severity level, and state, we can create a user-defined exception in SQL Server.
+ RAISERROR('The specified row does not exist.', 16, 1);
+
+-------------------------INDEXES----------------------------------------------------------------------
+Clustered Index:
+1.Its created on primary key 
+2.Store data physically according to the order
+3.Only one clustered index can be there in a table
+4.No extra space is required to store logical structure 
+5.Data retrieval  is faster than non-cluster index 
+
+Non-Clustered Index:
+1.It can be created on any key 
+2.It don’t impact the order 
+3.There can be any number of non-clustered indexes in a table
+4.Extra space is required to store logical structure 
+5.Data update is faster than clustered index
+
+---------------------------------------------OUTPUT CLAUSE-----------------------------------------------
+
+--> link -- https://www.c-sharpcorner.com/UploadFile/b1df45/output-clause-in-sql-server/
+OUTPUT with the INSERT statement: Simply provide the name of the columns that you would like to be fetched, using the Inserted.Column_Name
+
+OUTPUT with DELETE statement: The concept remains the same, except the Inserted.Column_Name is replaced with DELETED.Column_Name
+
+OUTPUT with UPDATE statement: For any UPDATE operation, the records to be updated are first deleted and then inserted into the temporary tables. So we can get both the old and new record values.
+
+OUTPUT with JOIN UPDATE/DELETE: Apart from these operations, we can also use the OUTPUT to get the records affected when we are using a JOIN statement to UPDATE/DELETE bulk records
+
+
+
+----------------------------------------------Go Clause----------------------------------------------------
+Go => When executing SQL scripts or batches in SSMS, the GO keyword is used to separate different sections of code. It tells SSMS to execute the statements preceding the GO keyword as a batch and then move on to the next batch. The GO keyword is not recognized by the SQL Server engine itself; it is only interpreted by SSMS.
+
+
+----------------------------------------------Modes of Transactions in SQL Server------------------------------
+Auto-commit transactions in SQL Server
+The auto-commit transaction mode is the default transaction mode of the SQL Server. In this mode, each SQL statement is evaluated as a transaction by the storage engine. In this context, if any SQL statement completes its execution successfully it is committed and the data modification will become permanent in the database. On the other hand, if any statement faces any error it will be rolled back. In this transaction mode, we don’t try to manage transactions and all operations are managed by the SQL Server.
+
+Implicit transaction mode in SQL Server
+In the implicit transaction mode, SQL Server takes the responsibility for beginning the transactions implicitly but it waits for the commit or rollback commands from the user. In the implicit transaction mode, the database objects involved in the transaction will remain locked until the commit or rollback commands are executed. In order to use the implicit transaction mode, we need to set implicit transaction mode to ON. We can use the following syntax to enable or disable the implicit transaction mode
+
+Explicit transaction mode in SQL Server
+In the explicit transaction mode, we have to define the starting and ending points of the transactions. It means that all transactions must start with the BEGIN TRANSACTION statement and end with either COMMIT TRANSACTION or ROLLBACK TRANSACTION statements. We can use explicit transactions in SQL Server in its simplest form as below. After committing the transaction the data modification will be persisted in the database.
+
+---------------------------------------------- Benefits of UDF ----------------------------------------------------
+
+UDFs support modular programming. Once you create a UDF and store it in a database then you can call it any number of times. You can modify the UDF independent of the source code.
+UDFs reduce the compilation cost of T-SQL code by caching plans and reusing them for repeated execution.
+They can reduce network traffic. If you want to filter data based on some complex constraints then that can be expressed as a UDF. Then you can use this UDF in a WHERE clause to filter data.
+
+
+---------------------------------------------- Stored Procedure ----------------------------------------------------
+
+-Stored procedure is a group of SQL statements that has been created  and stored in the database.
+-A stored procedure will accept input parameters so that a single procedure can be used over the network by several clients using different input data.
+
+-A stored procedures will reduce network traffic and increase the performance.  If we modify a stored procedure all the clients will get the updated stored procedure.
+
+-- with parameters; create
+CREATE [OR ALTER] PROCEDURE <pname>
+@name NVARCHAR(20),
+@manufacturer NVARCHAR(20),
+AS
+BEGIN
+<PROCEDURE BODY/ STATEMENTS>
+END
+
+-- call procedure
+EXECUTE / EXEC <pname>;
+
+-----------------------------------------------------------SP vs UDF-----------------------------------------------
+stored procedure                                                                  UDF
+May or may not return a value                                           Must return a value
+Can have input/output parameters                                        Only have input parameters
+We can call function inside sp                                          Cannot call sp from a function
+We cannot use sp in sql statements like select,insert       		We can use these statement with function
+We can use try catch exception handling                                 We can not use exception handlig
+
+
+---------------------------------------------IDENTITY-----------------------------------------------------------
+
+In SQL Server, the SET IDENTITY_INSERT statement is used to allow explicit insertion of values into an identity column of a table. By default, SQL Server does not allow the insertion of explicit values into an identity column. However, you can use the SET IDENTITY_INSERT ON statement to temporarily override this restriction.
+
+SET IDENTITY_INSERT Employees ON statement allows explicit value insertion into the "EmployeeID" column. You can then insert a row with a specific "EmployeeID" value (in this case, 1001). Afterward, you should turn off the IDENTITY_INSERT option using SET IDENTITY_INSERT Employees OFF.
+
+
+---------------------------------------------Triggers-----------------------------------------------------------
+---------------------------------------------Triggers-----------------------------------------------------------
+---------------------------------------------Triggers-----------------------------------------------------------
+
+These are stored programs/procedure , which are automatically executed or fired when some event occur. 
+Events can be DML , DDL , Database Operation (LogOn , LogOff , ShutDown).
+
+It is a set of SQL statements that reside in system memory with unique names. It is a specialized category of stored procedure that is called automatically when a database server event occurs. Each trigger is always associated with a table.
+
+Benifts of Triggers : 
+-- gain strong control over security
+-- enforcing referential integrity (parent m jab tak data nahi too child m entry nahi)
+-- Auditing
+-- Event logging and storing information on table access.
+-- Synchronous replication of table
+-- Preventing invalid transactions.
+
+Triggers are row level and table level
+
+The main characteristics that distinguish triggers from stored procedures:-
+
+- We cannot manually execute/invoked triggers.
+- Triggers have no chance of receiving parameters.
+- A transaction cannot be committed or rolled back inside a trigger.
+
+Syntax :- 
+CREATE [OR REPLACE] TRIGGER trigger_name
+{BEFORE | AFTER} {INSERT | UPDATE | DELETE} ON table_name
+[FOR EACH ROW]
+[WHEN (condition)]
+BEGIN
+   -- Trigger body: actions to be performed when the event occurs
+END; 
+
+
+------------------------------------------- drop a trigger---------
+DROP TRIGGER IF EXISTS [trigger name];
+
+-------------------------------------------------------------------------------------------------
+SELECT @Id = Id from inserted  
+SELECT @Id = Id from deleted  
+Here inserted and deleted are special tables used by the SQL Server. The inserted table keeps the copy of the row when you insert a new row into the actual table. And the deleted table keeps the copy of the row you have just deleted from the actual table.
+
+-----------------------------------------Types----------------------------
+Types of SQL Server Triggers
+- Data Definition Language (DDL) Triggers
+- Data Manipulation Language (DML) Triggers (after , instead of trigger)
+					-- after insert , after update , after delete
+					-- instead of insert , instead of update , instead of delete
+- Logon Triggers
+
+
+After Trigger -> When we insert data into a table, the trigger associated with the insert operation on that table will not fire until the row has passed all constraints, such as the primary key constraint. SQL Server cannot fire the AFTER trigger when the data insertion failed.
+
+Instead of Triggers -> This Trigger fires before SQL Server begins to execute the triggering operation that triggered it. It means that no condition constraint check is needed before the trigger runs. As a result, even if the constraint check fails, this trigger will fire. It is the opposite of the AFTER trigger. We can create the INSTEAD OF triggers on a table that executes successfully but doesn't contain the table's actual insert, update, or delete operations.
+
+--DDL---
+CREATE TRIGGER schema_name.trigger_name   
+ON table_name  
+FOR {INSERT | UPDATE | DELETE}
+AS  
+BEGIN  
+      -- Trigger Statements  
+      -- Insert, Update, Or Delete Statements   
+END 
+
+--DML---
+CREATE TRIGGER schema_name.trigger_name  
+ON table_name  
+AFTER {INSERT | UPDATE | DELETE}  
+AS  
+   BEGIN  
+      -- Trigger Statements  
+      -- Insert, Update, Or Delete Statements  
+   END
+
+--Instead of ---
+CREATE TRIGGER schema_name.trigger_name  
+ON table_name  
+INSTEAD OF {INSERT | UPDATE | DELETE}  
+AS  
+   BEGIN  
+      -- trigger statements  
+      -- Insert, Update, or Delete commands  
+   END  
+
+--------Alter a trigger----------------------
+ALTER TRIGGER [dbo].[triggers_in_sql]   
+   ON  [dbo].[EmployeeTable]   
+   AFTER INSERT  
+AS   
+BEGIN  
+ -- Modify as per your needs  
+END  
+
+
+-------------drop multiple logon trigger  ------------------
+DROP TRIGGER [ IF EXISTS ] trigger_name1, trigger_name2.....n  
+ON { DATABASE | ALL SERVER }; 
+
+----------drop simple multiple trigger DDL --------------------------------
+DROP TRIGGER [ IF EXISTS ] trigger_name1, trigger_name2.....n    
+ON ALL SERVER;  
+
+----------drop simple multiple trigger DML --------------------------------
+DROP TRIGGER schema_name.trigger_name1, trigger_name2.....n;  
+
+Logon Triggers -->
+Logon triggers are fires in response to a LOGON event. The LOGON event occurs when a user session is generated with an SQL Server instance, which is made after the authentication process of logging is completed but before establishing a user session. As a result, the SQL Server error log will display all messages created by the trigger, including error messages and the PRINT statement messages. If authentication fails, logon triggers do not execute. These triggers may be used to audit and control server sessions, such as tracking login activity or limiting the number of sessions for a particular login.
+
+
+------to see all tables in db-----------------------------------------------------------
+select * from sys.tables;
+
+--------------------------------------------------------------------------------------
+In SQL Server, the NOT FOR REPLICATION option is used to specify that a particular action should not be replicated to other databases or servers as part of a replication process. It is commonly used when defining constraints, triggers, or other database objects that should only apply to local operations and not be propagated to other replicated instances.
+
+
+-------------see all login person----------------------------------------------
+
+SELECT is_user_process, original_login_name, *
+FROM sys.dm_exec_sessions 
+where is_user_process=1
+ORDER BY login_time DESC;
+
+-------------see current login person----------------------------------------------
+
+select ORIGINAL_LOGIN() as [current login person];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,436 @@
+Adobe CF -->> https://www.youtube.com/playlist?list=PL3iywAijqFoUD31CQBLsHvJn4WAonNA7r
+46-52 done
+61-71 ->session management.
+
+
+ctrl + shift + E/Q   -> next/previous member function.
+ctrl+[ , ctrl+]      -> navigate between attributes.
+
+ctrl+alt+V -> jump to end of tag/block  
+
+https://www.microsoft.com/en-in/sql-server/sql-server-downloads  -> download sql server developer edition.
+
+---------------forms------------------------------------------------------
+By default html forms uses method="get".
+if we dump form having get method like -> <cfdump var="#url#" >    then only fields are displayed
+
+when we use form having post method like -> <cfdump var="#form#" > then fieldname also displayed with fields data.
+
+you can supply a checked paramter in input of type radio so that one of the field is always checked because in post method if we do not supply anything to the option then that filed is gayab from cfdump and in checkbox case 
+
+cfform uses the post method by default.
+
+------------------------------DOUBTTTTTTTTTTTTTTTTT---------------------------------
+Q. why coldFusion is running on 8600.
+Q. Online state - The session values are automatically deleted when the browser is closed. but after closing too i am able to access the session varibales but in cookies tab CFAUTHORIZATION_MyApp got deleted omn browser close.
+
+
+----------------set DB Connection-----------------------
+in SSMS - security- logins- left click on sa -click on properties - change password and enable it from status.
+Open SQL server config manager from window search - open sql server network config - click on protocols - enable TCP/IP
+in SSMS - left click on your SQL server and go to properties - click on security - select SQL and windows authentication
+restart your sql server by left clicking on it.
+Make sure SSMS developer edition is downloaded
+
+<meta charset="UTF-8"> : UTF-8 is the most widely used character encoding on the web and ensures proper rendering of text content, including special characters and symbols, in different languages.
+In Short , this declaration ensures proper character encoding
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">:
+
+width=device-width: This part sets the width of the viewport to match the device's width. It ensures that the content's width adjusts to the device's screen size, avoiding horizontal scrolling on smaller screens.
+
+width=device-width: This part sets the width of the viewport to match the device's width. It ensures that the content's width adjusts to the device's screen size, avoiding horizontal scrolling on smaller screens.
+
+initial-scale=1.0: This part sets the initial zoom level when the page is first loaded. A value of 1.0 means no zoom, ensuring that the content appears at its original size on most devices.
+
+
+CF is a application server that uses the CFML language.
+ColdFusion Markup Language <CFML> is a dynamic web programming language.
+ColdFusion (CFML) is an interpreted and dynamic ECMA Script like language that compiles to Java Bytecode directly, thus running in the Java Virtual Machine (JVM) and in almost every operating system
+
+<cfinclude template="header.cfm">
+
+---------------------------------------------using cfset-----------------------
+<cfset scope.variablename="value">
+<cfoutput>
+  #scope.variablename#
+</cfoutput>
+
+---------------------------------------------using cfparam-----------------------
+
+The <cfparam> tag creates a variable if it doesn't already exist. You can assign a default value using the default attribute. This can be handy if you want to create a variable, but don't want to overwrite it if it has already been created elsewhere.
+
+
+<cfparam name="firstName" default="Ozzy">
+<cfoutput>
+Hello #firstName#
+</cfoutput>
+
+
+-----------------------------structKeyExists()----------------------------------------------------------
+structKeyExists() is a built-in function in ColdFusion used to check whether a specific key exists within a ColdFusion structure (such as an array or a struct).
+ It allows you to verify if a particular key is defined within the structure before attempting to access its value.
+
+---------------------------------------------Variable exist check-----------------------------
+
+<cfif IsDefined("firstName")>
+  Hello #firstname#!
+<cfelse>
+  Hello stranger!
+</cfif>
+
+
+
+-------------If no scope provided , order to find a varible------------------
+1.  Local (function-local, UDFs and CFCs only)
+2.  Arguments
+3.  Thread local (inside threads only)
+4.  Query (not a true scope; variables in query loops)
+5.  Thread
+6.  Variables
+7.  CGI
+8.  Cffile
+9.  URL
+10. Form
+11. Cookie
+12. Client
+
+----------variable scopes-----------
+ColdFusion provides four variable scopes : 
+Client
+Session
+Application
+Server
+
+----------------------------------Operators------------------------------------------
+eq stands for "equal to"
+EQ, IS, and == operators are case insensitive.                          => Equality Operators
+
+neq stands for "not equal to"
+NEQ , IS NOT , != are "not equal to" operators.                         => Inequality Operators
+
+NOT , ! 							        => Negation Operators.
+
+gt to test that a value is greater than another.                        => Comparison Operator
+lt to test that a value is less than another.			        => Comparison Operator
+gte to test that a value is greater than or equal to another.		=> Comparison Operator
+lte to test that a value is less than or equal to another.		=> Comparison Operator
+CONTAINS ,  DOES NOT CONTAIN -> comparison operator
+
+& , &=                                                                  => Concatenation Operators
+eg. name = name & " Jr"; 
+eg. name &= " Jr";
+
+--------------------------- if-else ----------------------------------------------
+		<cfset firstName = "Ozzy">
+		<cfif firstName eq "Bono">
+			Still haven't found what I'm looking for.
+		<cfelseif firstName eq "Ozzy">
+			Crazy Train!
+		<cfelse>
+			Choose your own song then...
+		</cfif>
+
+
+----------------------Index Loop------------------------------
+<cfloop from="1" to="5" index="i" step="2">
+  <cfoutput>
+  #i#<br />
+  </cfoutput>
+</cfloop>
+
+
+----------------------Conditional Loop------------------------------
+<cfset myVar=false>
+<cfloop condition="myVar eq false">
+  <cfoutput>
+  myVar = #myVar#  (still in loop)
+ </cfoutput>
+  <cfif RandRange(1,10) eq 10>
+    <cfset myVar="true">
+  </cfif>
+</cfloop>
+<cfoutput>
+myVar = #myVar# (loop has finished)
+</cfoutput>
+
+
+----------------------Query Loop------------------------------
+
+<cfquery name="getMovies" datasource="Entertainment">
+  select top 4 movieName
+  from Movies
+</cfquery>
+<cfloop query="getMovies">
+   #movieName#
+</cfloop>
+
+this attribute can include username,password and cachedAfter="November 20, 2006" and cachedwithin="#CreateTimeSpan(0,1,0,0)#" and maxrows="50" and timeout="30"
+
+
+--------------------------list loop--------------------------
+<cfloop list="ColdFusion,HTML;XML" index="ListItem" delimiters=",;">
+  <cfoutput>
+   #ListItem#<br />
+ </cfoutput>
+</cfloop>
+
+
+
+-------------<cfscript>-----------------------------
+The CFScript syntax provides a way of writing CFML code without using tags.
+It encloses a code block that contains cfscript statements
+
+
+
+------------------------------------List----------------------------------------
+length : listLen(coldfusion_list)
+Loop : <cfloop list="#coldfusion_list#" index="i">
+	<cfoutput> #i#</cfoutput>
+	</cfloop>
+Add at Start : listAppend(coldfusion_list, "ColdFusion Functions")
+Add at End   : listPrepend(coldfusion_list, "ColdFusion Functions")
+Add at pos   : listAppend(coldfusion_list, "ColdFusion Functions")
+
+ also accept an optional delimiter field, which, if needed, you place at the end. For example: listAppend(coldfusion_list, "ColdFusion Functions", ":")
+
+Case sensitive : listContains(coldfusion_list, "ColdFusion")
+Not Case sensitive :listContainsNoCase(coldfusion_list, "ColdFusion")
+
+Compare	Performs a case-sensitive comparison of two strings.
+CompareNoCase	Performs a case-insensitive comparison of two strings.
+returns -> 		A negative number, if string1 is less than string2
+			0, if string1 is equal to string2
+			A positive number, if string1 is greater than string2
+
+
+
+  ListContains(myList,"Bangkok")    // Returns 2 since index of Bangkok is 2
+  ListContains(myList,"Singapore") // Returns 0 since Singapore is not a part of the list
+
+ListToArray(coldfusion_list)
+ArrayToList(array_name)
+
+
+listDeleteAt("foo,bar|lorem,ipsum|me|something", 2, "|")
+2 is position
+| is optional delimeter(from where we separate things , default is comma)
+
+----------------------HTML----------------------------------------
+ dt -> defining a term (label)
+dd ->used for defining a description or value (input)
+
+---------------------------------ValueList()------------------------------------------------------
+ValueList() function is used to convert a list into a comma-separated string of its values. It can be particularly useful when you have a list of values and need to pass them as a string parameter to a function, store them in a database, or perform other operations that require a comma-separated list.
+
+
+-----------------------NumberFormat()---------------------------------------------------------------------
+NumberFormat() function is used to format numeric values according to a specific pattern. It provides options for controlling decimal places, grouping separators, negative numbers, and more.
+
+
+listEvery,listIndexExists -> Not Exist in CF
+
+
+
+--------------------------------------------Array Methods-------------------------------------------------------
+------------------>arrayAvg
+Calculates the average of the values in an array.
+All elements in the array must contain values that can be
+automatically converted to numeric.
+
+arrayAvg(array) → returns numeric 
+someArray.avg() -> same as above
+
+------------------>arrayContains
+Used to determine if a value is in the given array, case-sensitive. returns true if element is present.
+
+------------------>For Deletion ==> arrayDelete , arrayDeleteAt , arrayDeleteNoCase
+------------------>For Finding  ==> arrayFind , arrayFindAll , arrayFindAllNoCase , arrayFindNoCase 
+
+
+-------------------------------------------------Queries in CF------------------------------------
+The cfsqltype attribute in <cfqueryparam> is used to specify the ColdFusion SQL data type of the parameter being passed to a database query. It ensures that the parameter is formatted correctly for the specific database being used. The primary purpose of cfsqltype is to prevent SQL injection attacks and to improve data integrity and consistency when executing
+ database queries.
+
+
+------------------Custom Tags-------------------------
+you can make custom tags that will be there for all the application inside ->
+C:\ColdFusionBuilder2018\ColdFusion\cfusion\CustomTags
+
+Storing of Custom Tags : 
+1. In the same directory as the calling page.
+2. In the cfusion/CustomTags directory.
+3. In a directory specified in CF adminstrator.
+4. In a specific directory of your application.
+
+--------Calling of Custom Tag---------------
+1. which are in same directory
+<cf_foo>
+ <cf_foo attribute1="value" >
+2.Using <cfmodule/>
+<cfmodule template="path_to_tag_file" attribute1="value" >
+
+3. using <cfimport>
+<cfimport prefix= "myTags" "taglib"="path_to_custom_folder"
+
+---------------Calling Custom Function---------------------------
+we use <cfinclude template="path_of_file"
+
+ <cffunction  name="add_2" access="public" returntype="numeric">
+        <cfargument name="num1" type="numeric" required="true">
+	<cfreturn num1+2 >
+<cffunction/>
+
+calling of function : 
+<cfoutput> #add_2(4)#</cfoutput>
+
+------------------ Calling a Component------------------------
+Making a component :
+<cfcomponent namespace="second_component">
+---- define a function----
+</cfcomponent>
+
+1.<cfset myComponent2 = new File_Name()>
+<cfoutput> #myComponent2.function_name()# </cfoutput>
+
+2. <cfinvoke component="name" method="method_name" returnVariable="return_name">
+	<cfinvokeargument name="name" value="value" />
+   </cfinvoke>
+
+<cfoutput>  #return_name# </cfoutput>
+
+3. <cfobject component="name" name="object_name" />
+<cfset newNum =  object_name.method_name(3) />
+
+4. <cfset x = createObject('component' , 'components.component_name') />
+	<cfset newNum = x.function_name(2) />
+-----------------------ColdFusion Component-------------------------
+These are with extensions .cfc 
+can contain zero or more user defined functions(inside component they are mehtods)
+can contain zero or more properties.
+A CFC is used to encapsulate methods and/or properties.
+paramter -> output=false will not generate unnecessary whitespace in html
+
+-----------------------------------------IMPORTANT------------------------------
+for function -> for another direc   --    <cfinclude template="Custom_Functions/Multiply_by_2.cfm" >
+for same direc    --  <cfinclude template="temp1.cfm" >
+for tag ->  for another direc   --  <cfmodule template="Custom_Tags/Header_Footer.cfm">
+	for same direc    --   <cf_PrintData > </cf_PrintData>
+			
+for compo ->
+ for another direc     <cfset x = createObject('component', 'Custom_Component.MathFunctions') />
+ for same    <cfset myComponent = new MyComponent()>
+
+
+
+-----------------Session Management----------------------------
+
+Q. how does session begin ?
+-> when a new user request his first page.
+-> CF always tries to relate the request to an existing session.
+-> CF generated 2 variables used as session identifiers -- CFID and CFTOKEN
+
+Q. how doed CF maintains a session ?
+-> CFID and CFTOKEN are send to user as cookies.
+-> On the next request, those cookies are sent with request.
+-> if cookies disabled, CFID and CFTOKEN are passed as URL parameters.
+ 
+Q. How does a session ends ?
+-> When a time-out is meet.
+-> Default time-out specified in a CF administrator.
+-> a time-out specified in the Application.cfc
+
+Q. Session vs User log-in ?
+-> a session is created for each new user even if the user is unknown.
+-> use that session scope to store info about that user.
+-> session scope is a perfect place to store logged-in user info.
+-> the sessionscope itself exists before the user logs-in
+
+Q. CF scopes ?
+-> Server Scope = available to all the applications hosted on a given server.
+-> Application Scope = available to all the pages and all the users of a specific application  (a single server can have multiple applications).
+-> Session Scope = available to a specific user session.
+
+
+
+In CF adminsitrator -  Enable Application Variables , Enable Session Variables (when unchecked, CSRF protection is disabled)
+
+-----------------------------------------------------------------------------------------
+for turning on debug output -> go to adminstrator > Debugging & Logging
+  > tick Enable Request Debugging Output 
+
+for enabling application variable -> -> go to adminstrator > Debugging & Logging > (at the end ) Variables > tick on  Application 
+
+
+-------------Event Handlers in Application.cfc folder-------------------------------------
+ 
+on Application Start(), on Application End() :-
+-> When the first request is made to the application
+-> When the application shuts down (most of the time, after a timeout)
+
+onSessionStart(), onSessionEnd() :-
+-> When a new user requests his first page
+-> When a user session ends (most of the time, after a timeout)
+
+onRequestStart(), onRequest(), on RequestEnd()
+-> Just before a request is executed, in place of the request, just after the request is executed
+
+onError()
+-> When a error occurs.
+
+Cycle : 
+The lifecycle of a request
+OnApplication Start()
+OnSessionStart()
+OnRequestStart()
+OnRequest()
+OnRequestEnd()
+
+----------------------------------
+if in <cfquery maxrows=-1> means return all rows.
+
+-----------------------------------
+Sessions are server-side files that contain user information, whereas Cookies are client-side files that contain user information.
+
+Session is dependent on Cookie, but Cookie is not dependent on a session.
+
+Session ends when a user closes his/her browser, while a Cookie expires depending on the lifetime you set for it.
+During the session, you can store as much data as you like, whereas the maximum cookie size is 4KB.
+
+What is a Session?
+-> A session is a global variable stored on the server. Each session is assigned a unique id which is used to retrieve stored values. Whenever a session is created, a cookie containing the unique session id is stored on the user’s computer and returned with every request to the server.
+
+
+Cookie-> Once a cookie has been set, all page requests that follow return the cookie name and value.
+---> one browser session does not goes to other browser
+
+Why and when to use Sessions?
+To store important information such as the user id more securely on the server.
+It is also used when you want the alternative to cookies on browsers that do not support cookies.
+
+------------------------------------------------------------------------cflock----------------------------------------------------------------------------
+<cfset sharedVariable = 0>
+<cflock name="myLock" type="exclusive">
+    <cfloop from="1" to="10" index="i">
+        <cfset sharedVariable = sharedVariable + 1>
+    </cfloop>
+</cflock>
+
+We have enclosed the critical section of code (the loop that increments sharedVariable) within the <cflock> tag. The name attribute provides a unique name for the lock, and the type attribute is set to "exclusive" to ensure that only one thread at a time can execute the locked code.
+Now, the code is thread-safe, and sharedVariable will always be incremented correctly without any race conditions.
+
+
+----------------------------------------------------------------------------------------------
+ enctype="multipart/form-data" attribute is used in HTML forms to enable the uploading of files from a user's device to a web server. This encoding choice ensures that the binary file data is transmitted in a structured and well-defined manner that can be correctly processed on the server side. It's a crucial consideration when creating file upload forms to ensure that files are handled accurately and without corruption during the transmission process.
+
+----------------------------------Why need normalization--------------------
+It is the process of organizing the data in the database.
+To reduce redundancy 
+Divides the larger table into smaller and links them using relationships.
+Data consistency within the database.
+Much more flexible database design.
+Enforces the concept of relational integrity.
+
+
+
+

@@ -1,0 +1,842 @@
+51-60 pending -> Code Step by Step
+4:44 - 10:23 ->pending free code camp
+Reactive form by octa academy ((IMP))
+video-27 date17 department list , codeEvolution
+
+In and out of the code------can refer angular blog
+Framework generally consisit set of libraries.
+Libraries generally perform some specific operations.
+Features of ANG. -> Template , data binding , Forms , Routing , PWA
+ANG has routing functionality to create SPA.
+ANG also offers SSR(Server Side Rendering).
+tscofig.json -> configuration file
+tscofig.spec.json -> used to compile .spec files, for unit testing --- testing vaali file ki configuration
+tscofig.app.json -> rest of your code , .ts files are compiled using this.
+karma -> task runner for tests --- test ko run karne ki configurations
+angular.json -> contain information related to my workspace
+package.json -> project detail. -- only has overview
+node_modules -> saari libraries which are req. by project.
+assests -> for images or extra common css files
+main.ts  -> connects html and angular
+pollyfils.js -> we add some libraries that will support our browsers.
+package.lock.json -> detailed of all packages and their internal dependent package which they require with versions.
+The spec files are unit tests for your source files. The convention for Angular applications is to have a .spec.ts file for each .ts file. They are run using the Jasmine javascript test framework through the Karma test runner
+For using [(ngModel)] we have to include Forms Module. in app.module
+The template Ref. variable can also be used tpo refer to the HTML tag.
+Decorators are functions that modify JavaScript classes.
+
+--------------
+mono-repo -> create and maintain multiple apps in same repo , deploy multiple apps/libs from same repo
+ng serve -o    -> to run the application. tjis runs on watch mode. 
+--------------------------------
+binding Syntax - interpolation , property binding , event binding
+
+Interpolation -> to show dynamic data on html page.{{}} , not for boolean values only for strings and numbers.
+property binding -> for boolean values
+for changing property or attribute you should use property binding.  [disabled]= value_by_ts
+
+ng generate component component_name -> to generate a component
+
+ng g m module_name -> to create module (large folder)
+
+ng g c module_name/component_name -> to create component inside a module.
+
+ng build ->make dist folder to put on server to run p roject.
+
+ng generate component component_name --inline-style -> will generate component but not style file , the styling is done in .ts file.       
+Same  for --inline-template -> not include HTML file
+ng g c FileName --inline-template --inline-style -> will generate only ts and spec.ts file
+
+if you create a new component the app.module.ts file automatically includes it's import and will be regisitered in declarations.
+
+to use any component make its html tag and include its selector name  in place where you want to use 
+
+
+in app.module.ts -> in declarations component name comes , in imports module name comes
+
+
+if creating a component in a module first import that module in app.module.ts and then import that,
+then in newly created module (user-auth.module.ts ) export the component (login)
+
+style binding - dynamic styles comming from ts file.
+
+
+-----------Material UI adding-------------------
+ng add @angular/material
+
+then in app.module.ts import then import the thing you want in app.component.html file and add tag their
+
+
+ng-template falls under the category of structural directives, which help us define a template that doesn’t render anything by itself, but conditionally renders them to the 
+DOM. It helps us create dynamic templates that can be customized and configured.
+
+
+In Angular, directives fall under 3 major categories:         built-in directives      attribute directives       structural directives
+
+
+The *ngFor directive tells Angular to iterate over a list
+ ng g directive <name> -> generate custom directive
+
+Your template can use data binding to coordinate the application and DOM data, pipes to transform data before it is displayed, and directives to apply application logic to what gets displayed.
+-----------------------------
+ IN HTML   <p [item] = "data"  >
+IN TS data=10;
+if [item] = "data"    // data is variable
+if [item] = " 'data' "    // data is string
+
+two way binding - same time pe property ko update aur display karvana.
+for two way binding import { FormsModule } from '@angular/forms';  in app.module and also then import then in your html page <input type="text"  [(ngModel)]="name" /> <p>{{name}} </p>
+name is property and ``  [(ngModel)]="name `` and this is 2-way-binding
+
+template reference variable - #form then this `form ` is template refe. variable through which we can display that data in html file for sending it to ts file we can pass this through a function as a parameter
+
+pipes -> change data form from one to another.only used in HTML file
+<h1>{{title | uppercase}}</h1>   => will change titile to upper case. 
+
+
+------------------------------------------------------------------
+angular never connects to the database  , it connects to the API.
+
+Component > Service (API) > HTTP module > Server
+
+
+---------API CALL to get Data-------------
+create service >
+
+((in user-data.servies))
+ import { HttpClient } from '@angular/common/http';
+constructor(private http: HttpClient) {}
+
+  users() {
+    return this.http.get('data');
+    // return this.http.get('url_as_well');
+  }
+ ((app.module.ts))
+import { HttpClient, HttpClientModule } from '@angular/common/http'; // for api services and include in imports  
+
+((in app component))
+ import {} from '../app/services2/users-data.service'  // for api services.
+data: any;
+  constructor(private userData: UsersDataService) {
+    userData.users().subscribe((data) => {
+      this.data = data;
+      console.log(data);
+    });
+  }
+
+
+---------API CALL to SEND Data-------------
+
+((in app.module))
+ import { FormsModule } from '@angular/forms'; //for form
+((in simple-form component )) 
+import {UsersDataService} from '../services/users-data.service'; 
+   constructor(private userData: UsersDataService) {
+    userData.users().subscribe((data) => {
+    });
+  }
+  getUserFormData(data: any) {
+    this.userData.saveUsers(data).subscribe((result) => {
+      console.log(result);
+    });
+  }
+
+((in user-data.services))   
+saveUsers(data: any) {
+    return this.http.post(this.url, data);
+  }
+---------------------------------------------
+Hostlistner are used to listern any event which is hapennig to your parent component where the directives are applied.
+ElementRef,  Renderer2 these are the API for directicves to changfe the behaviuor of the DOM
+
+if you want custom valitor for event driven form you should implement validator
+
+
+IN Reactive Forms -> use FormControl class to create form controls
+use Formgroup to group multiple controls.
+
+pristine = saf-sutra true kahi pe bhi touch kara too false
+
+
+
+----------------------STRUCTURAL DIRECTIVE-----------
+
+with this we manipulate the DOM by adding and removing HTML elements to DOM.
+with leading * we can identify this.
+
+---------------ATTRIBUTE DIRECTIVE-----------
+change appearance or the behaviour of DOM element
+like ngClass , ngStyle
+we used this as a property binding
+
+
+The ngModel directive is a directive that is used to bind the values of the HTML controls (input, select, and textarea) or any custom form controls, and stores the required user value in a variable and we can use that variable whenever we require that value. It also is used during form validations
+
+
+{{23.3233| number : '1.2-4 '}} before point 1 digit after point min=2 and max=4
+{{price | currency : "IND" : false}}  if true then symbol, now IND 
+{{price | currency : "IND" : false : 2.1-1}}  -- combined above two 
+date pipe is also there you can search on google. 
+json pipe , percent pipe , slice pipe, 
+
+------------------------Custom Pipes -------------------------
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'customPipe1',
+})
+export class CustomPipe1Pipe implements PipeTransform {
+  transform(value: string, length?: number): unknown {
+    if(!length){
+      length =22; // if no argument we have set this to 22
+    }
+    return value.substring(0, length);
+
+  }
+}
+
+ngStyle -> can have multiple css properties.
+
+---------------SERVICES----------------------
+
+Introduction to services and dependency injection
+Service is a broad category encompassing any value, function, or feature that an application needs. A service is typically a class with a narrow, well-defined purpose. It should do
+ something specific and do it well.
+
+Angular distinguishes components from services to increase modularity and reusability.
+
+Dependency Injection: Services are typically created using Angular's dependency injection mechanism, which enables them to be easily injected into other components or
+ services. On the other hand, classes can also be injected using dependency injection, but they are not necessarily singleton objects like services.
+
+a singleton class guarantees that there will always be only one instance of the class at runtime, regardless of how many times the class is instantiated.
+
+Within the concept of services, Angular has another aspect; Dependency Injections. By integrating the services code into injections, they can be made available to every component. 
+The @Injectable() decorator is also used in Angular to define a class as a service.
+
+Ideally, a component's job is to enable only the user experience. A component should present properties and methods for data binding to mediate between the view and the application logic. 
+The view is what the template renders and the application logic is what includes the notion of a model.
+
+A component should use services for tasks that don't involve the view or application logic. Services are good for tasks such as fetching data from the server, validating user input, or logging 
+directly to the console. By defining such processing tasks in an injectable service class, you make those tasks available to any component. You can also make your application more adaptable 
+
+by injecting different providers of the same kind of service, as appropriate in different circumstances.
+
+Angular doesn't enforce these principles. Instead, Angular helps you follow these principles by making it easy to factor your application logic into services. In Angular, dependency injection
+ makes those services available to components.
+
+---------------
+WHY NOT NORMAL CLASS , WHY USE SERVICE
+Services -> a class with specific purpose ,
+ use -> share data , implement same logic in different classes. ORRR use to apply application logic 
+we use angular service to share data and common methods among components whether there is relationship between components or not.
+for eg. one common on-click method can be made in services and we can then use in our components.
+
+these are classes that can have data , properties , functions and we can use these in multiple files
+
+Services are usually implemented through dependency injection.
+
+Angular services are singleton objects that get instantiated only once during the lifetime of an application. They contain methods that maintain data throughout the life of an application
+, i.e. data does not get refreshed and is available all the time. 
+The main objective of a service is to organize and share business logic, models, or data and functions with different components of an Angular application.
+
+
+Another motive to use services is how they are different from the controllers in terms of initialization. To make more simpler, controllers are re-initialized every single time when you call 
+them. Be it for testing Angular services or while using the platform in real-time.
+
+But Services in Angular are constructed only once, and they are always available to complete the task delegated by the components.
+-----------------------
+~~ Why we use services in angular although we have class ? 
+In Angular, services are used to provide a way to share data and functionality across multiple components or throughout the entire application. While classes can be used to define data models and behavior, they do not have the same level of functionality as services.
+
+Here are a few reasons why services are used in Angular:
+
+Dependency Injection: Services can be easily injected into components or other services through Angular's dependency injection system. This allows for easy sharing of data and functionality between components and promotes modularity and reusability.
+
+Singleton Pattern: Services are typically defined as singleton instances, meaning that there is only one instance of the service throughout the application. This helps to reduce the amount of memory and resources used by the application.
+
+Separation of Concerns: Services allow for a separation of concerns between components and the underlying data or functionality. This promotes clean code architecture and makes it easier to maintain and test the application.
+
+Asynchronous Operations: Services can be used to perform asynchronous operations such as making HTTP requests, which can be difficult to manage within a component.
+
+In summary, services are an essential part of the Angular framework as they provide a way to share data and functionality across the application, promote modularity and reusability, and allow for a separation of concerns between components and the underlying data or functionality.
+-----------------------------
+~~Why we should use service : 
+The purpose of using services in angular is to increase the flexibility and modularity of the applications.
+
+Using services helps you to isolate your controller doing business logic, communication, and storage related things because
+ services are intended for business logic or communication with server either Storage use.
+
+With this approach, you use the controller only for view management, data binding, form validations, user interactions, etc. and
+ separate concerns on the testability of your Angular application, that's why you can write unit tests (like Karma) much easier.
+
+~~Why Should We Use Services in Angular?
+The separation of concerns is the main reason why Angular services came into existence. An Angular service is a stateless object and provides some very useful functions.
+ These functions can be invoked from any component of Angular, like Controllers, Directives, etc. This helps in dividing the web application into small, different logical units which can be reused.
+
+The Controller is a constructor, works like a class .
+Angular create new instances of the controller every time view is created as well as  destroy controller when the view is destroyed. The controller is not suitable for keeping application 
+data throughout the application life-cycle. That's why services should not be used within views directly, instead, they need to be injected into the controller. Services should not manipulate 
+DOM objects, either HTML and CSS.
+
+The controller in AngularJS is a JavaScript function that maintains the application data and behavior using $scope object.
+
+You can attach properties and methods to the $scope object inside a controller function, which in turn will add/update the data and attach behaviours to HTML elements.
+
+~~Why are controllers used in AngularJS?
+AngularJS controllers are used to control the flow of data of AngularJS application. A controller is defined using ng-controller directive. A controller is a JavaScript object 
+containing attributes/properties and functions.
+
+Services Provide Modularity
+
+~~ What is the benefit of Angular service?
+A reusable Angular service is designed to encapsulate business logic and data with different components of Angular. It is basically a class that has a well-defined purpose to do something. 
+You can create a service class for data or logic that is not associated with any specific view to share across components.
+
+
+~~ How to Define an Angular Service?
+Services need to be defined in Angular to streamline the compilation and code rendering process. Hence to define the services in Angular, we need to use the @Injectable() decorator that will help supply metadata and give an indication to inject the service into the component.
+In other words, defining a service means that you need to instruct about the same to the code to make it available. There are three ways to define angular services.
+Service Metadata
+Provider Array (In a Specific Module)
+Provider’s Array (In a Specific Component)
+
+------------------CUSTOM SERVICES--------------------------------((date15))
+generate services >
+ ng g services userdata
+((in your component)) > 
+import {UserdataService} from '../app/services/userdata.service'   
+providers : [UserdataService],  ---- by passing this to this component decorator ,we are telling that to angulat to create UserdataService instance only for AppComponent class.
+export class AppComponent {
+  mD1 : any;   // define that
+newArray : Array<any>;
+  constructor(private memberData1 : UserdataService)            // private memberData1 : UserdataService ----- this is dependancy injection.
+  {  this.mD1 = memberData1.users();
+     this.newArray = memberData1.FromUserDataArray
+  }
+}
+
+((then in html file)) > 
+<li *ngFor="let member of mD1">
+      {{ member.name }} --------
+      {{ member.email }}
+    </li>
+
+If making use of UserdataService in multiple file, we will be creating new-new instance which slows the speed,
+ solution-1 is - providers can be in app.module  (this will only create the instance once)
+solution-2 (automatically added)is - in UserdataService import {Injectable , Injector} from ' @angular/core'
+		    then in that class @Injectable({ providedIn : 'root'})
+------------------------TWO WAY BINDING------------------
+<label for="two-way" title="TWO WAY BINDING">Two Way </label>
+<input type="text" id="two-way" [(ngModel)]="name" />
+
+<span> -> {{ name }}</span>
+
+<br>
+<!-- Another equivalent way to achieve this is: -->
+<!-- This is actually similar to the first sample, which used a property binding and an event binding. -->
+
+<label  title="Property-Event BINDING">Two Way </label>
+<input [ngModel]="text" (ngModelChange)="text = $event">
+<span>-> {{text}}</span>
+
+
+
+------------------------ROUTING---------------------------
+We use angular routers to navigate through components.
+steps -> configure the routes > add router-outlet > add navigation link paths.
+
+if router file is not there then, 
+import router module in app.module and in imports 
+RouterModule.forroot(
+[
+{path:' ' ,  component : homeComponent },
+{path: 'posts' ,  component : postComponent },
+])
+
+
+then in your app 
+<button  routerLink='/'> Go to home</button>
+
+<button  routerLink='/post'> Go to posts</button>
+<router-outlet> </router-outlet>
+
+We can use href too , but it will reload the pages , load to website and not a feature of our angular
+In query paramter after ? there are query parameters and they are separated by & symbol
+Manually creating the routing component - ng g module app-routing --module app --flat
+
+
+
+for :id vaali chez k liye import { Router } from '@angular/router'; in your parent component where you given :id buttons     ((app Date-17))
+    <button (click)="onSelect(item)">{{ item.name }}</button>
+  constructor(private router : Router){}
+  onSelect(departments1: any) {
+    this.router.navigate(['/department-list', departments1.id]);   ORRR     this.router.navigate([departments1.id] , {relativeTo : this.route});
+  } // will navigate us to /department-list/<id>
+
+iss <id> ko department-detail m access karne k liye : 
+jaha pe :id vaali chez ko navigate kar rahe ho vaha pe import { ActivatedRoute } from '@angular/router';
+--ØRRRR-1 ---------
+  constructor(private route: ActivatedRoute) {}
+  id = this.route.snapshot.paramMap.get('id');
+---ØRRRR-2 -----
+let id : number = 0;
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.params.subscribe((params) => {
+      console.log('id  : ', params['id']);
+      this.id = parseInt(params['id']);
+    });
+now you can use this ID 
+
+router has nagivate function to which we ca pass the array and send something to link 
+link m changes karne k liye router : Router ,,, link ko access karne k liye route : ActivatedRoute
+route:ActivatedRoute is used to read the value on link
+
+------------------
+
+  id = this.route.snapshot.paramMap.get('id'); this has a problem is it reuses the same component due to which our link changes but contet not
+ so we use Params / ParaMap  which is a observable so we need to subscribe it
+
+-------OPTIONAL PARAMETER----------------  
+
+goDep(){
+    let selectedId = this.departmentId;
+    this.router.navigate(['/departments' , {id : selectedId}])
+this.router.navigate([' ../ ' ,  { id: selectedId }] , {relativeTo : this.route});
+  }
+
+-------------------programatically routing----------
+import {  Router } from '@angular/router' ;
+  constructor(private router : Router){}
+ onSubmit(){
+this.router.navigate(['/about-us'])
+
+----------CHILD ROUTE-----------
+{
+    path: 'department-list/:id',
+    component: DepartmentDetailComponent,
+    children: [{ path: 'contact', component: ContactComponent }],
+  },
+
+
+<button (click)="showContact()">Contact</button>  
+<router-outlet></router-outlet> // in Dep.Detail htmlFile
+  showContact() {
+    this.router.navigate(['contact'], { relativeTo: this.route });
+  } // in DepartmentDetail.ts file
+
+
+
+------------------------------------------
+404 router is callled wild card router.
+  }
+--------------PARENT TO CHILD-----------------------------------
+1. To use the @Input() decorator in a child component class, first import Input and then decorate the property with @Input(), as in the following example.
+
+2. In the child component html , use that variable
+3. The next step is to bind the property in the parent component's template. In this example, the parent component template is app.component.html.
+
+3.1. Use the child's selector, here <app-item-detail>, as a directive within the parent component template.
+3.2. Use property binding to bind the item property in the child to the currentItem property of the parent.
+3.3  In the parent component class, designate a value for currentItem:
+
+  @Input(item) public nameChaneItem = ' '; // item comming from parent i changed the name to nameChaneItem
+
+-------------- CHILD TO PARENT-----------------------------------
+The @Output() decorator in a child component or directive lets data flow from the child to the parent.
+The following example features an <input> where a user can enter a value and click a <button> that raises an event. The EventEmitter then relays the data to the parent component.
+
+1. Configuring the child TS!!!!!!!!!!!!!!!!!
+    Import Output and EventEmitter in the child component class:
+2. In the child component class, decorate a property with @Output().
+ The following example newItemEvent @Output() has a type of EventEmitter, which means it's an event.    @Output() newItemEvent = new EventEmitter<string>();
+3. Create an addNewItem() method in the same child component class:
+   export class ItemOutputComponent {
+
+  @Output() newItemEvent = new EventEmitter<string>();
+
+  addNewItem(value: string) {
+    this.newItemEvent.emit(value);
+  }
+}
+4. Configuring the child HTML!!!!!!!!!!!!!!!!!
+   <label for="item-input">Add an item:</label>
+<input type="text" id="item-input" #nItem>
+<button type="button" (click)="addNewItem(nItem.value)">Add to parent's list</button>
+
+5. Configuring the parent TS!!!!!!!!!!!!!!!!!
+
+ export class AppComponent {
+  items = ['item1', 'item2', 'item3', 'item4'];
+
+  addItem(newItem: string) {
+    this.items.push(newItem);
+  }
+}
+
+6. Configuring the parent HTML!!!!!!!!!!!!!!!!!
+ <app-item-output (newItemEvent)="addItem($event)"></app-item-output>
+If passing Data <app-item-output (childEvent)="message = $event"></app-item-output>  // now you can use meesage varibale in parent HTML
+
+-->>>>>>> sabse phele child.ts m @output eventEmitter banaya child m input hai button click pe emmit hoga
+(newItemEvent)="addItem($event) -- newItemEvent jo child m tha usne pheka $event aur vo parent k addItem n le liya
+
+
+---------OBSERVABLE-----------------
+
+An observable is a sequence of data that is emitted data asynchronously or synchronously over a time of period
+A observable will continuously observe a set of stream data and automatically update or track that sequence of data whenever there is something changed.
+We call the observable with subscriber method.
+Observable can return more than once > advantage over normal JS functions
+
+1. HTTP get req. form empService
+2. Recieve the observable and cast it into an employee array
+3. Subscribe to the observavble from EmpList and EmpDetail
+4. Assign the emp array to a local variable.
+
+
+For step-1import {HttpClientModule} from '@angular/common/http' in .module.ts
+then in your service import { HttpClient } from '@angular/common/http';
+  constructor(private http : HttpClient) { }
+
+
+---------------------Dependency Injection   (DI)---------------------------------
+Dependency Injection is a technology that can inject a service into a component without going through the process to create them.
+ DI, is a design pattern and mechanism for creating and delivering some parts of an application to other parts of an application that require them.
+In Angular, dependencies are typically services, but they also can be values, such as strings or functions. An injector for an application (created automatically during bootstrap) instantiates dependencies when needed,
+When you register a provider at the component level, you get a new instance of the service with each new instance of that component.
+@Injectable({
+  providedIn: 'root'
+})
+class HeroService {}
+When you provide the service at the root level, Angular creates a single, shared instance of the HeroService and injects it into any class that asks for it. Registering the provider in the @Injectable metadata also allows Angular to optimize an app by removing the service from the compiled application if it isn't used, a process known as tree-shaking.
+
+----------------DIRECTIVE---------------
+~~Why do we need directives? ~~What do directives do in Angular?
+directives are basically a class that has a @Directive above the export class {} .
+components are directives @Component decorator & having a templatr also.
+
+In Angular, Directives are defined as classes that can add new behavior to the elements in the template or modify existing behavior. 
+The purpose of Directives in Angular is to modify the DOM, be it by adding new elements to DOM or removing elements and even changing 
+the appearance of the DOM elements.
+*ngIf is the reason why html class is not do this things that directive can do.
+
+~~When to use Angular directives?
+If your requirement is to easily change the style(attribute directive) or the structure(structural directive) of an existing component or an element you use directives. 
+Think about *ngFor, it is a structural directive and it is used to structure a group of elements.
+
+
+three types of directives in Angular are attribute directives, structural directives, and components.
+1. Components are directives that have a template.
+components = navbar , footer,rooms
+2. Structural directives change the DOM layout by adding and removing DOM elements.
+structural = ngFor , ngIF
+3. Attribute directives change the appearance or behavior of an element.
+attribute  = ngClass , ngModel , ngStyle
+
+LEARN MORE - https://www.edureka.co/blog/angular-directive/
+https://www.tutorialspoint.com/angularjs/angularjs_custom_directives.htm#:~:text=Custom%20directives%20are%20used%20in,for%20which%20it%20is%20activated.
+
+--------------------CUSTOM Attribute DIRECTIVE--------------
+directives are used to modifiy the DOM or HTML
+custom directives can anly be used in HTML
+eg. you want to show or hide the element , change style , change color
+eg. ngFor , ngIF , ngSwitch
+
+ng g directive directive/one
+this will modify declaration array of app.module and inset oneDirective in it. 
+.spec.ts is used to write the test kit for it
+
+Wrapping an object refers to creating a new object that references the original, but providing additional functionality through the new, wrapper object.
+Angular ElementRef is a wrapper around a native DOM element (HTML element) object. It contains the property nativeElement, which holds the reference to the underlying DOM object. We can use it to manipulate the DOM
+
+import { Directive } from '@angular/core';
+import { ElementRef } from '@angular/core';
+@Directive({
+  selector: '[appCustom1]',
+})
+export class Custom1Directive {
+  constructor(public el: ElementRef) {
+    console.log(el.nativeElement.innerText);
+    console.log(el.nativeElement.textContent);
+    el.nativeElement.style.color = 'red';
+  }
+  // The @HostListener decorator lets you subscribe to events of the DOM element
+  @HostListener('click') onClick() {
+    this.el.nativeElement.style.color = 'orange';
+    console.log('i am clicked from custom service');
+  }
+
+
+-----------------------8-3-23----------------------------------------
+-----------------------8-3-23----------------------------------------
+
+what is unit test
+
+-----------------------8-3-23----------------------------------------
+-----------------------8-3-23----------------------------------------
+
+
+
+-----------------------------------------------------------------------------
+problem in single-post.component.spec.ts (Expected undefined to equal Object({ id: 1, body: 'body 1', title: 'dsdsd' }).)
+
+calculator.service.spec.ts not calling the logger service log method.
+
+testing2\src\app\auth\component\login\login.component.ts -> Custom validator for password and confirmPassword
+
+declarations m kya dalte hai.
+
+--------------------To Do Task -------------------------------------------------------
+Investigate how yo can handle validation, without get name()  ------- in  day4/src/app/register/register.component.ts
+how to do unit testing in angular using karma/jasmine.
+filters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------
+date_1 has mosh and firebase auth
+day_2 kuch bhi nahi 
+date_3 has nothing
+week-4 for my work
+practise-test -> routing
+testing2 -> for submodule, double navbar , reactive-form , Guards
+---------------------------------------6-4-23-----------------------------------------
+interfaces can be extended and also has function blueprints and can also add some more to any existing interface 
+interface IPerson { 
+   firstName:string, 
+   lastName:string, 
+   sayHi: ()=>string 
+} 
+interface Harry extends IPerson{
+	contact : string
+}
+interface Harry {
+	admin : boolean
+}
+// now harry has firstName , lastName , contact , admin properties.
+
+var customer:IPerson = { 
+   firstName:"Tom",
+   lastName:"Hanks", 
+   sayHi: ():string =>{return "Hi there"} 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+-------------------------------------PROJECT-----------------------------------------------------
+*appToogleErrorMessage="!(errorMessage == '')"
+@ViewChild('searchForm', { static: false })
+-------------------------------------PROJECT-----------------------------------------------------
+i removed default ssorting type
+-------------------------------------PROJECT-----------------------------------------------------
+-------------------------------------PROJECT-----------------------------------------------------
+
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAroS57cx5VXnofeYPjmvitykwaTS0yQC8",
+  authDomain: "ekart-app-a383f.firebaseapp.com",
+  projectId: "ekart-app-a383f",
+  storageBucket: "ekart-app-a383f.appspot.com",
+  messagingSenderId: "723497335347",
+  appId: "1:723497335347:web:e5cb3e20c355cf1f13c146",
+  measurementId: "G-08MSVDEGMN"
+};
+
+
+
+https://ekart-app-a383f-default-rtdb.firebaseio.com/
+
+
+
+----------------TO-DO----------------
+how to update sub-category of all products.
+
+
+IN Product Service : --------------------------------
+  // filterProducts1() {
+  //   let products1 = this.getProductsArray();
+  //   this.filterProducts = products1.filter((product) => {
+  //     return product.title
+  //       .toLowerCase()
+  //       .includes(this.searchItem.toLowerCase());
+  //   });
+  // }
+
+
+IN Cart Service : --------------------------------
+  // getTotalPrice(): number {
+  //   let grandTotal = 0;
+  //   this.cartItemList.map((product: any) => {
+  //     grandTotal += product.total;
+  //   });
+  //   return grandTotal;
+  // }
+
+UserAuthentication Service : ------------------------------------------------------
+
+  // public deleteUser(userUniqueId: number): Observable<Object> {
+  //   return this._httpClient.delete(
+  //     `https://ekart-app-a383f-default-rtdb.firebaseio.com/user-data/${userUniqueId}.json`
+  //   );
+  // }
+
+  // public updateUser(userUniqueId: number, user: any): Observable<Object> {
+  //   return this._httpClient.put(
+  //     `https://ekart-app-a383f-default-rtdb.firebaseio.com/user-data${userUniqueId}.json`,
+  //     user
+  //   );
+  // }
+
+  // public setUserObject(userObject: any): void {
+  //   this.userObject = userObject;
+  // }
+  // public getUserObject(): Object {
+  //   return this.userObject;
+  // }
+
+
+Product Detail  Component : ------------------------------------------------------
+
+<!-- brand : "Samsung" category : "smartphones" description : "Samsung's new variant
+which goes beyond Galaxy to the Universe" discountPercentage : 15.46 id : 3
+images : ['https://i.dummyjson.com/data/products/3/1.jpg'] price : 1249 rating :
+4.09 stock : 36 thumbnail :
+"https://i.dummyjson.com/data/products/3/thumbnail.jpg" title : "Samsung
+Universe 9 -->
+---------------------------------
+<!-- <div class="similar-product-container d-flex align-items-stretch overflow-auto">
+  <span *ngFor="let product of similarProducts | slice : 0 : 4">
+    <span class="card similar-product-card m-2">
+      <img
+        class="similar-product-image"
+        alt="image"
+        src="{{ product?.thumbnail }}"
+      />
+      <div class="card-body">
+        <p class="card-text">{{ product?.title }}</p>
+        <h4 class="card-title">{{ product?.brand }}</h4>
+        <p class="card-text">{{ product?.price }}</p>
+      </div>
+    </span>
+  </span>
+</div> -->
+
+
+Orders  Component : ------------------------------------------------------
+  <div
+    class="hide orderList-container"
+    *ngFor="let orders of ordersList; let i = index"
+  >
+    userName = {{ orders.userData.userName }}
+    Orders :
+    <div *ngFor="let order of orders.orders; let i = index">
+      Title = {{ order.title }} Category = {{ order.category }}
+    </div>
+  </div>
+</div>
+
+
+
+Add-Category Component (show Data): ------------------------------------------------------
+
+<!-- temp1 -->
+<div class="container" *ngFor="let category of categories; let i = index">
+  Cat -> {{ category.category }}
+  <button (click)="sendCategoryDataToForm(category.category, category.id)">
+    Edit C
+  </button>
+
+  <div *ngFor="let subCategoryValue of category.subCategory">
+    SubCat -> {{ subCategoryValue }}
+    <button
+      (click)="
+        sendSubCategoryDataToForm(
+          category.category,
+          subCategoryValue,
+          category.id
+        )
+      "
+    >
+      Edit SC
+    </button>
+  </div>
+</div>
+<!-- temp2 -->
+-----------------------------------------------FILTERS PIPE
+// import { Pipe, PipeTransform } from '@angular/core';
+
+// @Pipe({
+//   name: 'filters'
+// })
+// export class FiltersPipe implements PipeTransform {
+
+//   transform(value: any[], searchKey: string, propName: string): any[] {
+//     const result: any = [];
+//     if (!value || searchKey === '' || propName === '') {
+//       return value;
+//     }
+//     value.forEach((a: any) => {
+//       if (a[propName].trim().toLowerCase().includes(searchKey.toLowerCase())) {
+//         result.push(a);
+//       }
+//     });
+//     return result;
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

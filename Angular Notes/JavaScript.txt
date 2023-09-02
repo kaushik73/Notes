@@ -1,0 +1,403 @@
+PENDING READING _W3Schools
+JS Tutorial -> JS date set methods
+HTML DOM -> DOM Navigation
+48 to 68 ->Harry pending
+
+If you want a general rule: always declare variables with const.
+If you think the value of the variable can change, use let.
+
+
+You cannot re-declare a variable declared with let or const
+You re-declare a JavaScript variable declared with var, it will not lose its value.
+
+If you put a number in quotes, the rest of the numbers will be treated as strings, and concatenated.
+
+If you assign a value to a variable that has not been declared, it will automatically become a GLOBAL variable.
+
+a var can be declared after it has been used. but define phele kara phir use phir initialize then 
+Using a let variable before it is declared will result in a ReferenceError.
+Using a const variable before it is declared, is a syntax errror, so the code will simply not run.
+let x;       // Now x is undefined
+
+
+let ko declaration k phele access nahi kar sakte , error dega.
+let initialization k phele undefined rhta hai.
+var before declartion and initialization undefined rhta hai aur error nahi deta.
+jab tak var ko initialize nahi karte vo undefined rhta hai.
+const is initialized and declared at same time.
+
+
+name1="kaushik"; // initail
+var name1; // declare
+console.log(name1);
+
+
+
+Const -> DI-USE; -> OK
+
+var -> USE-I-D , USE-D-I  => undefined
+let -> USE-I-D  ,USE-D-I   -> error
+
+let -> I-USE-D , I-D-USE => error
+var ->  I-USE-D  , I-D-USE=> runs
+
+let/var ->  D-USE-I  -> undefined
+let/var ->  D-I-USE; -> runs
+
+
+deleting a variable , deleting a function , Duplicating a parameter name,variable using before declaration are not allowed in "strict mode" 
+
+When adding a number and a string, JavaScript will treat the number as a string.
+
+JavaScript evaluates expressions from left to right. Different sequences can produce different results:
+
+
+const person = {firstName:"John", lastName:"Doe", age:50, }; // object
+const cars = ["Saab", "Volvo", "BMW"]; // array
+
+
+function toCelsius(fahrenheit) {
+  return (5/9) * (fahrenheit-32);
+}
+document.getElementById("demo").innerHTML = toCelsius; // return the function defination. 
+document.getElementById("demo").innerHTML = toCelsius(); // return function result.
+
+
+this keyword refers to an object.
+In an object method, this refers to the object.
+Alone, this refers to the global object.
+In a function, this refers to the global object
+
+
+Events are "things" that happen to HTML elements.
+
+
+let text = "HELLO WORLD";
+text[0] = "A";    // Gives no error, but does not work
+
+
+JavaScript will try to convert strings to numbers in all numeric operations:
+let x = "100"; let y = "10"; let z = x / y;  // answer is z=10. also - , * , / work but not add
+
+let x = 100 / "Apple"; // NAN
+
+If you use NaN in a mathematical operation, the result will also be NaN
+NaN is a number: typeof NaN returns number
+
+Comparing two JavaScript objects always returns false.
+
+toFixed() returns a string, with the number written with a specified number of decimals:
+toPrecision() returns a string, with a number written with a specified length.
+The Number() method can be used to convert JavaScript variables to numbers.
+toString() to convert to string.
+parseInt() to convert to int.
+
+
+ Arrays are special kinds of objects.
+Because of this, you can have variables of different types in the same Array.
+You can have objects in an Array. You can have functions in an Array. You can have arrays in an Array:
+
+
+In JavaScript, arrays use numbered indexes and objects use named indexes.
+
+
+The join() method also joins all array elements into a string.
+It behaves just like toString(), but in addition you can specify the separator.
+
+The pop() method returns the value that was "popped out":
+The pop() method removes the last element from an array:
+The push() method returns the new array length:
+The push() method adds a new element to an array (at the end):
+
+
+The shift() method removes the first array element and "shifts" all other elements to a lower index.
+The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements:
+
+Using delete leaves undefined holes in the array.
+Use pop() or shift() instead.
+
+
+for-in loop fetech key.
+for of loop fetch values.
+for each -> we can pass a function inside it and do our task.
+
+
+map has .keys , .has , .value, Map is a collection of elements where each element is stored as a Key, value pair.
+
+set not have index values , stored in order (only in JS), does not have repeated values.
+
+The filter() method creates a new array filled with elements that pass a test provided by a function.
+
+The reduce() method executes a reducer function for array element.
+The reduce() method returns a single value: the function's accumulated result.
+The reduce() method does not execute the function for empty array elements.
+The reduce() method does not change the original array.
+
+
+
+Event Deligation -> Instead of adding an event listener to each and every similar element, we can add an event listener to a 
+			  parent element and call an event on a particular target using the .target property of the event object.
+
+
+With the HTML DOM, JavaScript can access and change all the elements of an HTML document.
+With the object model, JavaScript gets all the power it needs to create dynamic HTML:
+
+In JavaScript, document.write() can be used to write directly to the HTML output stream:
+
+
+----------------------------------------------
+/* unvisited link */
+a:link {
+  color: red;
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
+-------------------------------------------------
+
+onmousedown -> jab tak click hoke raha.
+onmouseup -> jab tak click nahi ho raha.
+onmouseclick -> jab click hua.
+
+In bubbling the inner most element's event is handled first and then the outer: the <p> element's click event is 
+handled first, then the <div> element's click event.  ->(3rd param. of addEventListner is false)
+
+In capturing the outer most element's event is handled first and then the inner: the <div> element's click event will be 
+handled , then the <p> element's click event.
+
+-----------------------------------------------------
+let p1 = 5;
+let p2 = 7;
+document.getElementById("myBtn").addEventListener("click", function() {
+  myFunction(p1, p2);
+});
+
+function myFunction(a, b) {
+  document.getElementById("demo").innerHTML = a * b;
+}
+
+---------------------------------------------------
+
+The window.location.href property returns the URL of the current page.
+The window.location.pathname property returns the pathname of the current page.
+The window.location.assign() method loads a new document.
+
+
+
+The history.back() method loads the previous URL in the history list. This is the same as clicking the Back button in the browser.
+
+The history.forward() method loads the next URL in the history list. This is the same as clicking the Forward button in the browser.
+
+----------------------------------------
+
+A confirm box is often used if you want the user to verify or accept something.
+When a confirm box pops up, the user will have to click either "OK" or "Cancel" to proceed.
+If the user clicks "OK", the box returns true. If the user clicks "Cancel", the box returns false.
+
+function myConfirmPopup() {
+  var txt;
+  if (confirm("Press a button!")) {
+    txt = "You pressed OK!";
+  } else {
+    txt = "You pressed Cancel!";
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
+
+--------------------------------------------
+confirm -> yes/no
+prompt -> to take input
+alert -> to display something.
+
+A prompt box is often used if you want the user to input a value before entering a page.
+When a prompt box pops up, the user will have to click either "OK" or "Cancel" to proceed after entering an input value.
+If the user clicks "OK" the box returns the input value. If the user clicks "Cancel" the box returns null.
+
+The prompt() method displays a dialog box that prompts the user for input.The prompt() method returns the input value if the user clicks "OK", otherwise it returns null.
+
+function myPromptPopup() {
+  let text;
+  let person = prompt("Please enter your name:", "User1");
+  if (person == null || person == "") {
+    text = "User cancelled the prompt.";
+  } else {
+    text = "Hello " + person + "! How are you today?";
+  }
+  document.getElementById("demo").innerHTML = text;
+}
+
+----------------------------------------------------
+
+To display line breaks inside a popup box, use a back-slash followed by the character n.
+-----------------------------------------------------------------------------------------------------------
+setTimeOut,clearTimeOut,setIntevel,clearInterval
+<button onclick="clearInterval(myVar)">Stop time</button>
+<script>
+let myVar = setInterval(myTimer ,1000);
+function myTimer() {
+  const d = new Date();
+  document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+}
+
+----------------------------------------------------------------------------------------------------------------------
+
+------------------ for all regular function calls , this points to the window object.-----------------------------------------------
+
+slice() extracts a part of a string and returns the extracted part in a new string. The method takes 2 parameters: start position, and end position (end not included).
+substr() is similar to slice(). The difference is that the second parameter specifies the length of the extracted part.
+substring() is similar to slice(). The difference is that start and end values less than 0 are treated as 0 in substring().
+
+A regular expression is a pattern of characters.
+In JavaScript, a RegExp Object is a pattern with Properties and Methods.
+
+In Javascript, a typed array is an array-like buffer of binary data. There is no JavaScript property or object named TypedArray, but properties and methods can be used with typed array objects.
+
+
+A common use of JSON is to exchange data to/from a web server.
+When receiving data from a web server, the data is always a string. Parse the data with JSON.parse(), and the data becomes a JavaScript object
+
+JSON.stringify(object) -> convert object to json string.
+JSON.parse(string) -> convert json string to object.
+***** parse JSON ko object m banata hai. ******
+When using the JSON.parse() on JSON derived from an array, the method will return a JavaScript array, instead of a JavaScript object.
+ i.e. if parse a json array will return array not object
+
+JSON me single quote use nahi karte.
+values in JSON can be string , numbers , boolean , null
+
+The JSON.stringify() function will remove any functions from a JavaScript object, both the key and the value:
+This can be omitted if you convert your functions into strings before running the JSON.stringify() function.
+
+You can access object values by using dot (.) notation:
+You can also access object values by using bracket ([]) notation:
+
+
+Emmet shortend ->  div>ul>li*5.li${} 
+
+
+Event loop in JavaScript is a mechanism through which the 'calls waiting for execution' in the callback queue/job queue can be put on the call stack
+
+
+The forEach() method does not returns a  new array based on the given array.	The map() method returns an entirely new array.
+
+// Create a Set,onlt stores unique values
+const letters = new Set(["a","b","c"]);
+
+
+
+--------------PROMISE in JS------------------------------
+<!DOCTYPE html>
+<html>
+<body>
+<h2>JavaScript Promise</h2>
+<p>Wait 3 seconds (3000 milliseconds) for this page to change.</p>
+<h1 id="demo"></h1>
+<script>
+
+
+const myPromise = new Promise(function(myResolve, myReject) {
+  setTimeout(function(){ myResolve("I am here !!"); }, 3000);
+});
+
+myPromise.then(function(value) {
+  document.getElementById("demo").innerHTML = value;
+});
+
+
+</script>
+</body>
+</html>
+---------------------------------------------------------
+Create an Array from a String:
+Array.from("ABCDEFG")   // Returns [A,B,C,D,E,F,G]
+
+---------------------------------------
+
+Hitesh object has getname(name) function and kaushik object has not, nut kaushik object want to use it then->
+Hitesh.getname.bind(kaushik)(); -> .bind return reference back , now getname function has 'kaushik as this'
+------------------------------------
+
+getCourse -> referene of the method    &&&     getCourse() -> calling of the method
+
+
+--------------------------------------------------------------MAP------------------------------------------------
+You can create a Map by passing an Array to the new Map() constructor
+typeof MAP returns object:
+ForEach return value-key
+ForOf returns ke-value
+
+const fruits = new Map([
+  ["apples", 500],
+  ["bananas", 300],
+  ["oranges", 200]
+]);
+
+let text = "";
+let text2="";
+let text3="";
+
+fruits.forEach (function(value, key) {
+  text += key + ' = ' + value + "<br>"
+})
+
+for([key,value] of fruits){
+text2+=key + " - " + value + "<br>" }
+
+for(let key of fruits.keys()){
+text3 += `Key is  : ${key} <br>`;
+}
+
+document.getElementById("demo").innerHTML = text;
+document.getElementById("demo2").innerHTML = text2;
+document.getElementById("demo3").innerHTML = text3;
+
+
+------------------------------------------------------------------------------------------------------
+defining a private variable use # before name -> #itemCount=0;
+
+adding static keyword before any function make the function private
+
+
+
+
+
+
+
+-- Disable movement in chrome
+-- not have popup msg
+-- boundation of email
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

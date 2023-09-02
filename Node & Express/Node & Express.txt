@@ -1,0 +1,307 @@
+Js runs on browser.
+Node js is server side.
+Node js runs on server so can connect to database too.
+Node js is a server environment, it is not a language.
+Node js useChrom's V8 engine to execute code.
+
+If a language can connect to DB then it is a server side language.
+
+Chrome pe kuch likhte hai tab jo undefined dikhta hai uska matlab hai ki above statement ne kuch return nahi kiya hai.
+
+Node js is single thread , Node js is a Async Language
+console.log is not a part of JS. it is either property of browser or node js module .
+
+Global module -> modules that you have not to import in your file.
+
+http Module -> node js k andar req. aur res. ko handle karta hai.
+
+Shapes             <- Package name
+  - Circle.js      <-
+  - Rectangle.js   <- Modules that belong to the Shapes package
+  - Square.js      <-
+
+In Synchronous all task are perform one after the other means upto when 1st line not executed 2nd line does not start it's execution.
+
+API => interface between 2 programming language.
+-------------------EXPRESS JS -----------------------
+
+
+
+
+git add .
+git commit -m 
+git pull --rebase origin master
+git push origin <branch name> -f
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Express Js is a framework.
+
+Template Engine  => it enables you to use static template files in your application. 
+At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client
+
+Static Page = no relation with any type of external data.
+
+
+Application Level middleware -> apply to all routes of the app,
+const ageFilter = (req, res, next) => {
+  if (!req.query.age) {
+    res.send("Please Enter Age in Query Parameter!");
+  } else if (req.query.age < 18) {
+    res.send("You cannot access this website");
+  } else {
+    next();
+  }
+}; 
+
+app.use(ageFilter);
+-----------------
+MongoDB is a NoSQL databse.
+data is stored in form of collections.
+data is stored in form of collection, data is stored in form of objects 
+
+
+show dbs -> to see all dbs
+create dbs -> use youtube  // will create new youtube Db
+
+show collections -> to see all collections
+
+create collection -> db.createCollection('videos')
+
+db.videos.drop -> to  delete a collection
+db.dropDatabase() -> to delete a database
+db -> to see current database
+
+db.products.insertOne({name : "laptop" , price : 13200}); ->add data
+
+db.products.find() -> to see all data of products collection
+
+db.products.updateOne({name:"laptop"} , {$set : {price : 13000}})  -> update price of laptop 
+
+db.products.deleteOne({name : "laptop"}) -> delete data
+
+--------DB Connection----------------------------
+// const { MongoClient } = require("mongodb"); 
+// const MongoClient  = require('mongodb').MongoClient
+// const url = "mongodb://127.0.0.1:27017";
+// const client = new MongoClient(url);
+// const database = "e-comm";
+// async function getData() {
+//   let result = await client.connect();
+//   let db = result.db(database);
+//   let collection = db.collection("products");
+//   let response = await collection.find({}).toArray();
+//   console.log(response);
+// }
+// getData();
+
+
+--------------INSERT DATA--------------------
+
+const dbConnection = require("./mongoDBConnection");
+
+const insert = async () => {
+  const db = await dbConnection();
+  const result = await db.insertMany([
+    {
+      name: "poco x2",
+      price: "2300",
+    },
+    {
+      name: "poco x3",
+      price: "2100",
+    },
+  ]);
+
+  if (result.acknowledged == true) {
+    console.log("Data Entered Successfully");
+  } 
+};
+insert();
+
+--------------Read DATA--------------------
+
+const dbConnection = require("./mongoDBConnection");
+
+// ----------------OLD METHOD---------------------
+
+// dbConnection().then((resp) => {
+//   resp
+//     .find()
+//     .toArray()
+//     .then((data) => {
+//       console.log(data);
+//     });
+// });
+
+// --------------------NEW METHOD-------------------
+
+const find = async () => {
+  let data = await dbConnection();
+  data = await data.find().toArray();
+  // data = await data.find({name : 'laptop'}).toArray();  // to find a particular data
+  console.log(data);
+};
+
+find();
+
+
+
+
+--------------UPDATE DATA------------------------
+const dbConnection = require("./mongoDBConnection");
+
+const updateProducts = async () => {
+  const db = await dbConnection();
+  const result = await db.updateOne(
+    { name: "poco pro x2" },
+    {
+      $set: { name: "poco pr x2" },
+    }
+  );
+
+  console.log("one : ", result);
+};
+
+updateProducts();
+
+const updatePocoX3 = async () => {
+  const db = await dbConnection();
+  const result = await db.updateMany(
+    { name: "poco pro x3" },
+    {
+      $set: { name: "poco pr x3" },
+    }
+  );
+
+  console.log("many : ", result);
+};
+
+updatePocoX3();
+
+
+--------------DELETE DATA------------------------------
+
+const dbConnection = require("./mongoDBConnection");
+
+const deleteProduct = async () => {
+  const db = await dbConnection();
+  const result = await db.deleteMany({ name: "poco pr x2" });
+  console.log(result); 
+// agar poco pr x2 namm ka kuch nahi hai too acknowledged: true aayga par deletedCount : 0 aayga
+};
+
+deleteProduct();
+
+-------------------------------------------------------------------------------------------------
+
+Mongoose adv. over Mongodb -> schemas , validations , field datatype control.
+
+database ki fields ko define karte hai schemas k andar taki validations laga paye.
+model inn schemas ko use karke node js aur mongodb ko connect karta hai.
+
+----------------------------------can see day3>api.js for more info--------------------------------------------
+params are -> /search/keyword            (in google link)  <->  (in node code) app.get('/search/:key'){req.params.key};
+query are  -> /search/?key=samsung       (in google link)  <->  (in node code) app.get('/search'){req.query.key}; 
+--------------------------------------------------------------------------------------------------------------------
+REPL -> command line tool of node js.
+on cmd -> enter "node" , now you can write code and want to go to the editor type ".editor" and then CTRL + D to exit the editor mode
+".help" -> to see all other commands. 
+--------------------------------------------------
+Create == Post
+Read == Get
+Update == Put
+Delete  == Delete
+---------------------------------------------------
+In a microservice, each software application feature is separated from the other, in most cases with their respective servers and databases. Applications built with this kind of architecture are loosely coupled, also referred to as distributed applications.
+
+Monolithic architecture is like a big container in which all the software components of an application are clubbed inside a single package.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
