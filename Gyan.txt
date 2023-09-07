@@ -1,0 +1,73 @@
+Which is the difference between a directory and a folder?
+The main difference is that a folder is a logical concept that does not necessarily map to a physical directory. A directory is an file system object. A folder is a GUI object. The term directory refers to the way a structured list of document files and folders is stored on the computer.
+
+-----------------------------------Pranjal Kamra----------------------------------------
+video-7 in continue
+--------------------------------------- New Words ---------------------------------------------------
+farce -> dikhava
+
+------------------------------------------ Mutual Funds --------------------------------------------------
+SIP -> systematic investment plan
+SIIP -> systematic investment insurance plan (no charges for insurance) 
+Direct SIP are good , becoz agent commission bhi include hota hai jitna percentage kat rha hai.
+growth fund -> 15% return
+balance fund -> 12% return
+secure fund -> 10% return
+bond fund -> 8% return
+
+for sip we have to create demat + trading amount
+
+Criteria to check Good Sip : Fund Size  , past performance , it's holdings , expence ratio
+
+Mutual Fund = SIP + lumsum
+Sip is a tool with which you can invest in mutual funds.
+lumsum = ek sath paisa daal doo
+sip = thoda thoda har thode time m dalo
+
+---------------------------------------- STOCK MARKET -------------------------
+
+P/E ->
+The price-to-earnings (P/E) ratio relates a company's share price to its earnings per share.
+A high P/E ratio could mean that a company's stock is overvalued, or that investors are expecting high growth rates in the future.
+A high P/E could mean that a stock's price is high relative to earnings and possibly overvalued. Conversely, a low P/E might indicate that the current stock price is low relative to earnings. 
+When a company has no earnings or is posting losses, in both cases, the P/E will be expressed as N/A. 
+The higher the ratio, the more expensive a stock is relative to its earnings. The lower the ratio, the less expensive the stock.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

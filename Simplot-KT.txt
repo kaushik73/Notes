@@ -1,0 +1,86 @@
+MMS -> Manufacturing Management Suite
+
+APPLICATION LINKS : 
+Plant Accounting
+Process Control
+Packaging
+Grading
+Micro Lab
+Recovery
+SPC
+
+limit -> ( lower - target - Upper )
+
+
+v2 - active directory account
+v1 - iska password change nahi hota, manually kar sakte hai
+v3 - for china
+
+
+
+MMS master table - edit , read , export to excel
+
+screen base - common functionality
+point data factory - create component
+point display controller for buttons
+
+yellow background - PLC(data from machine) data.
+PLC - > Programmable logics  controller
+
+pointDisplayController -> buttons functionality
+
+grading - quality
+---------------------------------Folder Struct---------------
+assets -> all js and all CSS
+MMS tools -> only for v1, v2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
